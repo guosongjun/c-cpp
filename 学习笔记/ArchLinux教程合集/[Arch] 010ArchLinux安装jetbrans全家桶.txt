@@ -1,0 +1,31 @@
+1:Intellij IDEA
+yay -Sy intellij-idea-ultimate-edition
+
+2:WebStorm
+yay -Sy webstorm
+
+3:DataGrip
+yay -Sy datagrip
+
+4:GoLand
+yay -Sy goland
+
+5:PyCharm
+yay -Sy pycharm-professional
+
+6:CLion
+yay -Sy clion
+clion 配置工作
+在setting->Build,Execution,Deployment->Toolchains里面
+如果是gcc编译器
+CMake: /bin/cmake
+make: /bin/make
+C Compiler: /bin/gcc
+C++ Compiler: /bin/g++
+Debugger: /bin/gdb
+如果是LLVM Clang
+CMake: /bin/cmake
+make: /bin/make
+C Compiler: /bin/clang
+C++ Compiler: /bin/clang++
+Debugger: /bin/clangd

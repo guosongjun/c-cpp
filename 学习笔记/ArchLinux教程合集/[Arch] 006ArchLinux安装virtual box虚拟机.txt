@@ -1,0 +1,16 @@
+virtualbox 虚拟机
+先安装linux-headers
+sudo pacman -S linux-headers
+其次确认linux内核的版本
+uname -r 
+如果和header的版本不一致，需要更新内核。否则的话会在安装virtualbox的时候报错“missing kernal module tree”。
+sudo pacman -S linux
+建议把linux的内核先升级成最新
+然后安装virtualbox 安装默认选项不选 我们选2  也就是virtualbox-guest-modules-arch 
+sudo pacman -Sy virtualbox
+安装 virtualbox-guest-iso
+sudo pacman -S virtualbox-guest-iso
+如何让虚拟机屏幕分辨率可以自由调整
+我们需下载一个VBoxGuestAdditions.iso
+然后赋予最高权限sudo chmod 777 VBoxGuestAdditions.iso
+启动虚拟机后第二个sata选择这个就可以

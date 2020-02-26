@@ -1,0 +1,9 @@
+ArchLinux切换java版本真的是太贴心了 
+当你安装多个java的时候 
+设置环境变量会提醒你
+Default Java environment is already set to 'java-12-jdk'
+See 'archlinux-java help' to change it
+所以说我们只需要运行
+archlinux-java help 
+这个命令 就可以看到相关切换的设置了
+一键切换

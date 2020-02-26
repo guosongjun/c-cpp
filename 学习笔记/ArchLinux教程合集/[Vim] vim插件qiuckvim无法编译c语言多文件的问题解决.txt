@@ -1,0 +1,21 @@
+vim使用qiuckrun无法编译c语言多文件的问题
+打开qiuckrun插件位置
+~/.cache/dein/repos/github.com/thinca/vim-quickrun/autoload/qiuckrun.vim
+找到对应的关于c语言的部分 做出如下修改 主要是exec的修改 gcc和clang可以切换 取决于后面有没有: ' '
+修改如下 c++也可以仿照的改
+\ 'c/C': {
+\   'command': 'C',
+\   'exec': '%c %o -m %s',
+\ },
+\ 'c/gcc': {
+\   'command': 'gcc',
+\   'exec': ['%c --std=c11 *.h *.c -pthread -o %s:p:r', '%s:p:r %a'],
+\   'tempfile': '%{tempname().c}',
+\   'hook/sweep/files': '%S:p:r',
+\ },
+\ 'c/clang': {
+\   'command': 'clang',
+\   'exec': ['%c --std=c11 *.c -pthread -o %s:p:r', '%s:p:r %a'],
+\   'tempfile': '%{tempname()}.c',
+\   'hook/sweep/files': '%S:p:r',
+\ },

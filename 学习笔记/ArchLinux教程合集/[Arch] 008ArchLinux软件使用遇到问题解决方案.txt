@@ -1,0 +1,44 @@
+1:TIM的字体发虚 并且字体太小的解决方案
+a:先退出TIM
+b:下载wine
+yay -Sy wine
+c:更改分辨率 将分辨率改成120dpi 实在不行就重启
+env WINEPREFIX="$HOME/.deepinwine/Deepin-TIM" winecfg
+
+2:网易云音乐字体太小的解决方案
+a:退出网易云音乐
+b:编辑网易云音乐执行文件 关于vim的用法 我只能说这是必要的
+sudo vim /usr/share/applications/netease-cloud-music.desktop
+c:在Exec那一行的的最后面写上 1.3是缩放倍数 你可以自行调整
+--force-device-scale-factor=1.3
+
+3:关于搜狗输入法在TIM里输入不灵敏问题
+a:打开fcitx-configtool 也就是输入法配置 在搜索抽屉里搜
+b:输入法一栏 只留下 键盘-英语(美国) 和 搜狗拼音 这2个
+c:在全局配置中 切换激活/非激活输入法 改成shift
+d:全局配置中 选择显示高级选项
+e:将额外的激活输入法快捷键禁用
+f:打开搜狗拼音的配置文件查看是否符合 ~/.config/fcitx
+g:将fcitx设置成只读 sudo chmod a-w u-w o-w ~/.config/fcitx
+
+
+4:关于Teamviewer打开字体错位的问题
+a:打开配置文件
+sudo vim /opt/teamviewer/tv_bin/desktop
+b:修改Exec这一行
+Exec=/bin/sudo /opt/teamviewer/tv_bin/TeamViewer
+c:每次开启teamviewer前需要手动开启服务才能使用
+systemctl start teamviewerd
+
+5:关于使用Evolution登录QQ邮箱的问题
+imap服务器地址imap.qq.com 
+smtp服务器地址smtp.qq.com
+端口默认的就好
+
+6：网易云音乐不能输入中文的问题
+打开桌面配置文件
+sudo vim /usr/share/applications/netease-cloud-music
+在Exec一行中写入网易云音乐安装的完整路径 Exec=/opt/... %U
+
+9:其他问题解决方案 还没想到
+你也可以加QQ群讨论: 322085520

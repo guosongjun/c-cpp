@@ -1,0 +1,17 @@
+搜狗输入法
+目前搜狗输入法版本老 依赖qt4 而官方AUR下架了古老的qt4 所以安装步骤多一些
+目前搜狗输入法的版本可以查到是2.2.0 依赖qt4 等以后搜狗更新了 就不需要依赖qt4了 改用qt5了
+到时候安装搜狗输入法可以直接装 就没有下面这么多步骤了 自己要注意留意 下面是步骤
+a:安装fcitx
+yay -Sy fcitx fcitx-configtool fcitx-im
+b:安装搜狗输入法 这一步要注意 要选择带bin的的软件 别一直回车 要注意选2
+yay -Sy fcitx-sogoupinyin
+c:换源本地安装qt4
+sudo pacman -U https://arch-archive.tuna.tsinghua.edu.cn/2019/04-29/community/os/x86_64/fcitx-qt4-4.2.9.6-1-x86_64.pkg.tar.xz
+d:配置environment 对于vim的使用 我只能说 这是必要的
+sudo vim /etc/environment
+在文件末尾写入以下三行：
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS="@im=fcitx"
+保存重启 然后进fcitx输入法设置里面删掉其他输入法 只保留搜狗和美式键盘

@@ -1,0 +1,98 @@
+在安装nvim之前需要保证终端能够上网
+终端上网方式如下
+1:在群文件下载electron-ssr QQ群：322085520
+2:安装electron-ssr
+yay -U electron-ssr
+3:自备梯子 也就是ssr账号 没有就不要往下看了
+4：登录好electron-ssr后更新下pac文件
+5：将sockets协议转换成https协议 这里electron-ssr刚好有这个功能 所以直接在环境变量里添加
+export http_proxy="127.0.0.1:12333"
+export https_proxy="127.0.0.1:12333"
+6:测试能否科学上网
+curl www.google.com
+
+使用的是neovim v0.4 配置使用的是thinkvim的配置
+1：下载neovim v0.4 必须是0.4以上的版本
+2：解压neovim到/opt 添加进环境变量 如果是bash添加进/etc/bash.bahrc 如果是zsh添加进~/.zshrc
+3:安装pip3 
+yay -Sy python-pip
+4:安装pynvim
+pip install --user pynvim
+5：安装ruby和rubygems
+yay -Sy ruby ruby-docs rubygems
+6:将ruby添加进环境变量 ruby位置在/root/.gem/ruby/2.6.0/bin
+7:yay安装字体nerd-fonts-source-code-pro
+8:yay安装表情noto-fonts-emoji
+9：yay 安装nodejs
+10：yay安装yarn
+11:yay安装ripgrep
+12：yay安装ctags
+13:yay安装ccls
+14:gem安装rounge
+sudo gem install rouge
+15:安装thinkvim
+git clone --depth=1 https://github.com/taigacute/ThinkVim.git ~/.config/nvim
+16：关机重启
+17:下载完成后打开nvim
+过一段时间 nvim安装成功后 会自动在底部弹出安装完成后的信息
+注意留意下那些插件没安装好
+18：修改nvim中的python环境变量配置
+在～/.config/nvim/core/init.vim下
+这个根据自己python安装位置的实际情况修改 我的是去掉local
+20:yay安装npm
+21:npm可以切换到淘宝源 如果网速可以 可以不换
+npm config set registry https://registry.npm.taobao.org
+22：再次进入nvim输入更新插件命令
+:call dein#update()
+23：再次重新打开nvim
+看看有没有报错 什么地方报错 就用:CocInstall coc-xxx或者其他的软件就行了
+24：更新下插件
+:UpdateRemotePlugins
+25:添加coc lsp 
+coc lsp的github网址
+https://github.com/neoclide/coc.nvim/wiki/Language-servers
+以C语言lsp为例
+输入
+:CocCongfig
+在coc-settings.json中的lsp中添加
+languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+         "cache": {
+           "directory": "/tmp/ccls"
+         }
+       }
+    }
+  }
+然后保存退出
+其他语言都差不多
+26：按键 
+leader按键是space
+defx按键是leader+e
+leaderlocal按键是;
+快速运行按键就是
+;+r
+buffer切换按键是leader+数字键0-9
+关闭buffer是<C-x>
+其他按键和vim基本差不多
+其他详细按键可以访问thinkvim的github https://github.com/taigacute/ThinkVim
+27：如果不能终端科学上网也想安装怎么办？
+你可以在QQ群322085520下载coc.nvim 手动编译coc
+然后解压到
+/home/archlinux/.cache/dein/repos/github.com/neoclide/coc.nvim/
+目录下
+然后打开
+vim ~/.config/nvim/core/dein/plugins.yaml
+把coc的编译方式从
+rev: release 更换成
+build:yarn -install --frozen-lockfile
+然后在执行call dein#update()
+28:关于dein插件的一些命令 你可以查看github上关于dein插件的使用
+这是个日本人写的插件 名字叫Shougo 主页为https://github.com/Shougo
+29：刷新缓存命令 可以可以不执行
+call dein#recache_runtimepath()
+30：设置背景透明 你可以在nvim配置文件下添加
+let g:gruvbox_transp_bg = 1
