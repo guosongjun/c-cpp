@@ -1,0 +1,117 @@
+1:clang 大名鼎鼎的LLVM Clang C语言编译器
+yay -Sy clang
+
+2:gdb 也就是gcc的调试工具
+yay -Sy gdb
+
+3: cmake C语言构建工具
+yay -Sy cmake
+
+4:pip  python的模块工具
+yay -Sy python-pip
+
+5：tmux 终端复用工具
+yay -Sy tmux
+
+6：kchmviewer  chm查看工具
+yay -Sy kchmviewer
+
+7:krita 和gimp类似的作图工具 和windows下的ps是一样的
+yay -Sy krita
+
+8：gimp 不多介绍 和ps一样
+yay -Sy gimp
+
+9:obs-studio 录屏软件
+sudo pacman -Sy obs-studio 
+
+10:libreoffice 中文版本
+yay -Sy libreoffice-fresh
+yay -Sy libreoffice-fresh-zh-cn
+
+11:jdk 默认最新的
+yay -Sy jdk
+
+12：go 默认最新
+yay -Sy go
+
+13:wps 金山办公软件
+先安装字体
+yay -Sy ttf-wps-fonts
+然后安装wps
+yay -Sy wps-office
+
+14:freemind 思维导图
+yay -Sy freemind
+
+15:xmind-zen 思维导图
+yay -Sy xmind-zen
+
+16:filezilla 远程ftp工具
+yay -Sy filezilla
+
+17:drawio 类似UML之类的作图工具
+yay -Sy drawio-desktop-bin
+
+18:uget 下载管理器
+yay -Sy uget
+
+19:网易云音乐
+yay -Sy netease-cloud-music
+
+20:谷歌浏览器
+yay -Sy google-chrome
+
+21:TIM
+yay -Sy deepin.com.qq.office
+
+22:shadowsock科学上网
+yay -Sy shadowsocks-qt5 需要把网络代理设置成手动 127.0.0.1端口是1080
+
+
+23:vlc播放器
+yay -Sy vlc
+
+24:mplayer命令行播放器
+yay -Sy mplayer
+
+25:smplayer 图像界面的播放器
+yay -Sy smplayer
+
+16:gpick 屏幕取色工具
+yay -Sy gpick
+
+17:htop 资源进程管理器 top命令的升级版
+yay -Sy htop
+
+28:Evolution 邮箱 强烈推荐
+yay -Sy evolution
+
+29： QQ
+yay -Sy deepin.com.qq.im
+
+30:微信
+yay -Sy deepin-wine-wechat 
+
+31:百度网盘
+yay -Sy baidunetdisk
+
+31:teamviewer 远程控制
+yay -Sy teamviewer
+
+32:screenfetch 系统信息查看工具
+yay -Sy screenfetch
+
+33:lolcat 文本查看 也就是cat命令的升级版
+yay -Sy lolcat
+可以配合screefetch使用
+比如 screenfetch | lolcat
+
+34:file-roller 右键解压缩功能
+yay -Sy file-roller
+
+35:listen1 整合所有平台的音乐播放器
+yay -Sy listen1
+
+35:有啥说漏的了可以加群一起讨论交流推荐    
+            群号 322085520

@@ -1,0 +1,6 @@
+需要安装以下5个软件包与依赖 主要是需要32位显卡驱动的支持
+steam
+steam-native-runtime
+lib32-nvidia-utils
+lib32-mesa-libgl
+lib32-mesa

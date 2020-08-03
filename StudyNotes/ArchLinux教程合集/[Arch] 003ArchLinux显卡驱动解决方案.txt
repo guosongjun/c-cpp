@@ -1,0 +1,103 @@
+显卡驱动有2种解决方案
+一种是安装开源驱动
+另一种是安装闭源驱动
+
+开源驱动优点是安装简单 无需任何配置 不会有黑屏风险 缺点是开启程序使用英伟达显卡需要手动开启
+闭源驱动优点是官方支持 自动运行可能需要独显的程序 缺点是容易装黑屏 安装难度高 配置多
+
+一：开源驱动安装 bumblebee 大黄蜂
+1：安装英伟达驱动
+yay -Sy nvidia nvidia-utils
+
+2：安装开源驱动大黄蜂 调用nvidia接口
+sudo pacman -Sy bumblebee
+systemctl enable bumblebeed
+
+3：如果需要使用英伟达驱动启动某个应用程序
+就用optirun命令 后面跟应用程序名 或者 游戏名 就可以
+
+二：安装闭源英伟达驱动
+只支持英伟达9系以上的显卡 否则就不要往下看了 装开源驱动就好 否则很有可能会黑屏
+1：安装英伟达驱动
+yay -Sy nvidia nvidia-utils nvidia-settings
+
+2：查看Nvidia显卡的busid 最前面的就是id
+lspci | egrep 'VGA|3D'
+
+3：自动生成英伟达的配置文件
+nvidia-xconfig
+
+4：启动脚本配置
+有可能你是不同的dm 不同的dm有不同的配置 我只说哦lightdm 其他的dm自行百度
+我的dde桌面是lightdm
+创建执行脚本
+sudo vim /etc/lightdm/display_setup.sh
+写入
+#!/bin/sh
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+赋予脚本执行权限
+chmod +x /etc/lightdm/display_setup.sh
+打开lightdm的配置文件加入这个脚本
+sudo vim /etc/lightdm/lightdm.conf
+定位到
+[Seat:*]
+写入
+display-setup-script=/etc/lightdm/display_setup.sh
+
+5：修改配置文件
+sudo vim /etc/X11/xorg.conf
+写入以下内容
+Section "Module"
+    load "modesetting"
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BusID          "1:0:0"            #根据你查询到的BusID填
+    Option         "AllowEmptyInitialConfiguration"
+EndSection
+
+6：解决画面撕裂的问题
+打开配置文件
+sudo vim /etc/mkinitcpio.conf
+在MODULES中写入
+MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+打开配置引导文件
+sudo vim /etc/default/grub
+在GRUB_CMDLINE_LINUX_DEFAULT后面添加内容
+GRUB_CMDLINE_LINUX_DEFAULT="quiet nvidia-drm.modeset=1"
+grub配置生效更新
+grub-mkconfig -o /boot/grub/grub.cfg  
+
+7：防止nvidia显卡驱动因为升级后又导致黑屏
+创建文件夹
+sudo mkdir /etc/pacman.d/hooks
+创建并打开打开nvidia.hook配置文件
+sudo vim /etc/pacman.d/hooks/nvidia.hook
+写入
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia
+Target=linux
+
+[Action]
+Description=Update Nvidia module in initcpio
+Depends=mkinitcpio
+When=PostTransaction
+NeedsTargets
+Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+
+8：如果安装黑屏了怎么办
+开机grub引导界面在选择系统界面的时候 按e键 进入tty
+里面有quite这个单词 在quite后面添加一个数字：3
+然后按F10保存进入命令行系统就可以
+然后用命令删除掉所有英伟达显卡驱动和大黄蜂驱动
+如果还不行 就再重新安装一次桌面
+实在不行 那就重装arch系统 别搞什么闭源驱动了 装开源驱动就好了
+                                    QQ群：322085520

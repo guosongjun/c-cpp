@@ -1,0 +1,14 @@
+开机自动挂载磁盘分区 不用每次打开资源管理器 都输入密码手动挂载那样麻烦
+1:查看文件系统的uuid和文件系统类型 比如是sda下的分区
+sudo cfdisk  /dev/sda
+挨个查看sda1 sda2 sda3...的文件系统uuid 类型的话是ext4或者ntfs 根据自身情况看
+2：编辑fstab里面的内容
+sudo vim /etc/fstab
+在里面加入如下格式 UUID=xxxxxxxxxxx  /挂载路径（注意挂载目录要空目录） 文件系统类型 defaults 1 1 (取值1和0 代表要不要开机磁盘检查)
+例如我挂载的sda4 和 sda5 一个是ext4 一个是ntfs文件系统 挂载到/run/media/archlinux目录下 格式化后应该如下 
+# /dev/sda4
+UUID=842fa0b1-49df-4d38-ad88-f59f350a17b3 /run/media/archlinux/backup ext4 defaults 1 1
+# /dev/sda5
+UUID=6A5DDC763D9F3DB0 /run/media/archlinux/Win10 ntfs defaults 1 1
+
+如果UUID填错了 开机会进不去桌面系统 需要你手动输入密码 进入tty 把fstab添加的内容删了 然后重复上述步骤 填好正确的UUID

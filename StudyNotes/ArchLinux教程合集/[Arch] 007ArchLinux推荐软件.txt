@@ -1,0 +1,29 @@
+1:baidupcs  百度网盘命令行版本(推荐)
+yay -Sy baidupcs-go-bin 启动方式终端输入 baidupcs
+
+2：gitter 开发者聊天交流社区软件
+yay -Sy gitter
+
+3：opera 浏览器
+yay -Sy opera
+
+4：米聊  小米的社交聊天工具
+yay -Sy mitalk
+
+5：vscode 微软的代码编辑器
+yay -Sy code
+
+6:atom  github为程序员打造的编辑器
+yay -Sy atom
+
+7:360压缩软件
+yay -Sy 360zip
+
+8:360浏览器
+yay -Sy browser360
+
+9:微信
+yay -Sy electronic-wechat
+
+11:还没想到 如果有好的推荐 
+                请加群322085520讨论

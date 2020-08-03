@@ -1,0 +1,76 @@
+装完linux后 还不能完全使用 还要做一些配置才可以
+
+1：修改pacman.conf
+先进入root用户
+su root
+打开配置文件
+nano /etc/pacman.conf
+去掉下面3行内容前面的注释
+Color  
+TotalDownload
+[multilib]       
+Include = /etc/pacman.d/mirrorlist   
+
+2：添加国内清华源下载仓库
+nano /etc/pacman.conf
+在文件末尾添加3行
+[archlinuxcn]
+SigLevel = Optional TrustedOnly
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+
+3：初始化国内仓库下载源的密钥 这样以后下载某些东西的时候会加速
+rm -rf /etc/pacman.d/gnupg
+pacman-key --init
+pacman-key --populate archlinux
+pacman -S archlinuxcn-keyring
+
+4：去掉sudo的时候需要输入密码
+nano /etc/sudoers.d/sudoers
+写入
+用户名 ALL=(ALL) NOPASSWD: ALL
+
+5：安装中文字体 默认dde桌面是英文的
+pacman -S wqy-zenhei
+
+6：安装aur
+sudo pacman -S yay
+
+7：设置aur的源 yay配置文件位置 ~/.config/yay/config.json 
+yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+yay -P -g
+
+8：安装file-roller 右键解压压缩的功能
+yay -Sy file--roller
+
+9：关机重启
+reboot
+
+10:安装蓝牙驱动并设置开机自启服务
+sudo pacman -S bluez bluez-utils
+systemctl start bluetooth
+
+11：安装蓝牙音频
+sudo pacman -S pulseaudio-bluetooth
+sudo vim /etc/pulse/system.pa
+写入
+load-module module-bluetooth-policy
+load-module module-bluetooth-discover
+
+12:设置中文
+在设置界面里
+Control Center -> Keyboard and Language -> Enable Numeric Keyboard
+
+13:关机重启
+reboot
+
+
+13：设置分辨率缩放大小 
+在系统设置里 建议缩放1.25倍
+
+14：字体选择
+在设置里 建议选择Noto Sans Mono
+
+15:时间同步联网
+在设置里面 时区设置里选择自动同步时区 默认时区删掉选上海
+
+16：还没想好

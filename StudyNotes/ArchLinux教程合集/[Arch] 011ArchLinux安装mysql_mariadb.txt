@@ -1,0 +1,20 @@
+数据库安装 mariadb
+由于mysql被Oracle流氓主导 也开始变得收费 很多linux发行版 都放弃了mysql的支持
+纷纷转向mysql的另一个分支 mariadb
+ArchLinux也是其中之一
+Mariadb具有和mysql一模一样的操作命令 使用上手起来是毫无难度的 所以完全不用考虑迁移兼容的问题
+注意ArchLinux安装mysql是不可行的 不要试图安装mysql 那是不成功的
+a:安装mariadb 
+sudo pacman -Sy mariadb
+b:配置mariadb 命令 创建数据库都在/var/lib/mysql/目录下面
+sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+c:开启mariadb 服务
+systemctl start mariadb
+d:初始化密码 期间有让你设置密码的选项 设置你自己的密码就行了 然后一路y就行 
+sudo /usr/bin/mysql_secure_installation
+e:登录mariadb 和mysql命令是一样的
+mysql -u root -p
+f:设置开机自启动服务
+systemctl start mariadb #手动启动
+systemctl enable mariadb #开机自启动
+systemctl disable mariadb #关闭自启动

@@ -1,0 +1,19 @@
+使用Arch系Linux需要的知识(也就是关于包管理的安装 卸载之类的命令)
+pacman 和 yay的命令是一模一样的
+不同在于 pacman需要sudo权限安装 而yay不需要
+a:日常更新操作 -Syyu (让软件保持最新)
+sudo pacman -Syu  或者 yay -Syu
+b:搜索软件 -Ss xxx (以搜索vlc播放器为例)
+sudo pacman -Ss vlc 或者 yay -Ss vlc
+c:列出安装的软件清单 -Qs xxx (以Java为例) 这样做的目的是为了删除 比如我要删除java 但是不知道java具体的版本的名字 
+sudo pacman -Qs java 或者 yay -Qs java
+d:安装命令 -Sy xxx  (以drawio为例) 注意安装过程会软泥选择具体的软件包 一般默认是1 但是如果软件名带-bin的话 我们就选带bin的软件 编译好的
+sudo pacman -Sy drawio-desktop 或者 yay -Sy drawio-desktop  选择2 drawio-destop-bin
+e:删除软件 -Rs xxx 
+sudo pacman -Rs vlc 或者 yay -Rs vlc
+f:查询无依赖的软件包
+sudo pacman -Qdt
+g:批量删除所有无依赖的软件包
+yay -Rs $(yay -Qdtq)
+h:根据本地PKGBUILD文件构建的话在当前目录 使用一下命令
+makepgk -si

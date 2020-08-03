@@ -1,0 +1,107 @@
+安装ArchLinux只针对uefi引导方式 硬盘引导格式为gpt
+这些知识我只能说是必要的
+0:linux下刻录 命令  sdc是我的u盘位置 你的位置可以通过lsblk自行查看
+sudo dd if=archlinux-2019.01.01-x86_64.iso  of=/dev/sdc bs=4M
+1：windows刻录 下载刻录工具runfuns
+2：官网下载ArchLinux镜像
+3：runfuns刻录
+选好镜像文件 然后分区类型选GPT
+文件系统NTFS 簇大小4096 当然Fat32也行
+开始刻录 iso模式和dd模式都可以
+4：打开电脑从u盘启动
+5：启动后设置wifi联网先
+wifi-menu
+6:查看磁盘分区情况 建议装固态
+lsblk
+7：磁盘一般是sda sdb a b表示第1,2块磁盘
+比如我的固态磁盘是sdb 119GB大小
+那我就装这里 但是我们要对这2个磁盘进行分区
+8：磁盘分区 启动linux只需要2个东西 一个是efi分区用于启动linux 一个是/分区 用于存放整个linux系统
+cfdisk /dev/sdb 这里根据自己情况调整
+9:如果磁盘不是空闲的 就在cfdisk中选择delete 知道全删了
+10：在cfdisk中选择new 要new出2个分区 分区大小自己设置 然后选择type 分区类型
+sdb1 128M EFI system 
+sdb2 119GB Linux filesystem
+11:在cfdisk中选择write 写入 写上yes 最后quit退出
+12：格式化 之前分过区后 磁盘分区要有各自的文件系统
+一般efi文件系统是fat32 linux文件系统是ext4
+所以我们对2块磁盘格式化文件系统$ mkfs.ext4 /dev/sda3
+mkfs.fat -F 32 /dev/sdb1
+mkfs.ext4 /dev/sdb2
+13:挂载 把刚格式化的文件挂载到linux下
+mkdir -p /mnt/boot/efi
+mount /dev/sdb1 /mnt/boot/efi
+mount /dev/sdb2 /mnt
+14：接下来操作要联网下载东西 所以之前我们要更新下载源
+vim /etc/pacman.d/mirrorlist 
+vim也可以用nano代替 关于nano 和vim的操作 我只能说是必要的
+vim中搜索China 选择清华或者中科大的源 将那2行删除剪切到第一行
+archlinux默认用第一行的源作为使用
+然后执行刷新
+pacman -Syy
+15：下载系统必要组件基础包到系统下 这个要等一会
+pacstrap /mnt base base-devel
+16：生成硬盘文件有关的信息
+genfstab -U /mnt > /mnt/etc/fstab
+cat /mnt/etc/fstab    查看硬盘信息是否正确
+17：切换到已经配置好的系统 系统已经配置到/mnt下了 也就是你挂载到的磁盘分区
+arch-chroot /mnt
+18：设置时间和时区 生成/etc/adjtime文件 联网时间
+hwclock --systohc --localtime  
+timedatectl set-ntp 1          
+timedatectl set-timezone Asia/Shanghai
+timedatectl set-local-rtc 1 
+19：设置语言
+打开/etc/locale.gen
+nano /etc/locale.gen
+去掉以下三行的注释
+en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+zh_TW.UTF-8 UTF-8
+写入配置文件并使其生效
+locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+20：设置电脑主机名
+echo "你的电脑名称" > /etc/hostname
+21：设置hosts文件
+nano /etc/hosts
+写入
+127.0.0.1         localhost
+::1               localhost
+22：设置root密码
+passwd
+23：安装grub引导
+如果你是gpt格式磁盘
+pacman -S grub efibootmgr os-prober ntfs-3g
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+如果你是mbr格式磁盘 否则不执行
+pacman -S grub os-prober  #安装grub
+grub-install --target=i386-pc /dev/sda1
+grub-mkconfig -o /boot/grub/grub.cfg    #生成配置文件
+24：如果今后装了其他系统 想加入grub的配置只要重复执行一遍就可以
+grub-mkconfig -o /boot/grub/grub.cfg
+25：安装联网工具
+pacman -S rp-pppoe dialog iw wpa_supplicant networkmanager dhcp
+systemctl enable NetworkManager
+26：创建用户组
+$ groupadd 用户组名 （不要有大写）
+27：创建用户 （不要有大写）
+useradd 用户名 -g 用户组名 -G wheel -s /bin/bash -m 
+创建用户密码
+passwd 用户名
+28：安装dde桌面
+pacman -S xorg deepin deepin-extra lightdm-deepin-greeter --noconfirm
+systemctl enable lightdm
+29：填写lightdm配置
+nano /etc/lightdm/lightdm.conf
+内容定位到
+[Seat:*]
+在下面写上
+greeter-session=lightdm-deepin-greeter
+30：退出当前系统
+exit
+31：卸载掉挂载
+umount -R /mnt
+32：重启
+reboot
